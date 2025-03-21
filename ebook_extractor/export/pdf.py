@@ -6,7 +6,7 @@ from ebook_extractor.prototype import Book as _Book
 
 
 def save_as_pdf(book: _Book, path: str, as_text: bool = False) -> None:
-    if as_texts:
+    if as_text:
         text = "\n".join(page.to_text() for page in book)
         a4_width_mm = 210
         pt_to_mm = 0.35
