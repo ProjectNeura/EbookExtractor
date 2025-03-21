@@ -1,0 +1,34 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "ebook-extractor"
+version = "1.0.0-alpha.0"
+description = "Export ebooks from any platform as images or PDF files."
+license = "Apache-2.0"
+readme = "README.md"
+requires-python = ">=3.12"
+authors = [
+    { name = "Project Neura", email = "central@projectneura.org" }
+]
+dependencies = ["Pillow", "fpdf2", "numpy"]
+
+[project.optional-dependencies]
+default = [
+    "mss", "pynput", "pytesseract"
+]
+
+[tool.hatch.build.targets.sdist]
+only-include = ["ebook_extractor"]
+
+[tool.hatch.build.targets.wheel]
+packages = ["ebook_extractor"]
+
+[project.urls]
+Homepage = "https://ebook-extractor.projectneura.org"
+Documentation = "https://ebook-extractor.projectneura.org"
+Repository = "https://github.com/ProjectNeura/EBookExtractor"
+
+[project.gui-scripts]
+leads-vec = "ebook_extractor:__entry__"
