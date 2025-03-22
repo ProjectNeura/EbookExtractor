@@ -122,11 +122,11 @@ class EbookTerminator(object):
         dialog.bind("<KeyPress-Return>", confirm)
 
     def extract(self, book: _Book) -> None:
-        self._instruction.set("Click on your ebook application to yield focus (3)")
+        self._instruction.set("Click on your ebook application (3)")
         _sleep(1)
-        self._instruction.set("Click on your ebook application to yield focus (2)")
+        self._instruction.set("Click on your ebook application (2)")
         _sleep(1)
-        self._instruction.set("Click on your ebook application to yield focus (1)")
+        self._instruction.set("Click on your ebook application (1)")
         _sleep(1)
         self._instruction.set("Exporting...")
         match self._format.get():
@@ -152,7 +152,7 @@ class EbookTerminator(object):
         save_as_label = _CTkLabel(self._root, text="Save As")
         save_as_option = _CTkOptionMenu(self._root, width=96, variable=self._format,
                                         values=["PDF", "Text PDF", "Images"])
-        page_turner_option = _CTkOptionMenu(self._root, variable=self._page_turner,
+        page_turner_option = _CTkOptionMenu(self._root, width=96, variable=self._page_turner,
                                             values=["<➡>", "<space>", "<enter>"])
         save_as_entry = _CTkEntry(self._root, width=96, textvariable=self._path, justify="center")
         instruction_label = _CTkLabel(self._root, textvariable=self._instruction)
@@ -167,9 +167,9 @@ class EbookTerminator(object):
                             pady=self._py)
         page_turner_option.grid(row=0, column=6, sticky="NSEW", ipadx=self._px, ipady=self._py, padx=self._px,
                                 pady=self._py)
-        save_as_entry.grid(row=1, column=0, columnspan=2, sticky="NSEW", ipadx=self._px, ipady=self._py, padx=self._px,
+        save_as_entry.grid(row=1, column=0, columnspan=3, sticky="NSEW", ipadx=self._px, ipady=self._py, padx=self._px,
                            pady=self._py)
-        instruction_label.grid(row=1, column=2, columnspan=5, sticky="NSEW", ipadx=self._px, ipady=self._py,
+        instruction_label.grid(row=1, column=3, columnspan=4, sticky="NSEW", ipadx=self._px, ipady=self._py,
                                padx=self._px, pady=self._py)
         _GlobalHotKeys({
             "<shift>+<f4>": self.select_region,
