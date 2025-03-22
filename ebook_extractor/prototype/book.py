@@ -1,5 +1,7 @@
 from abc import ABCMeta as _ABCMeta, abstractmethod as _abstractmethod
-from typing import Iterator as _Iterator, Sequence as _Sequence, override as _override, overload as _overload, Any as _Any
+from typing import Iterator as _Iterator, Sequence as _Sequence, override as _override, overload as _overload
+
+from PIL.Image import Image as _Image
 from numpy import ndarray as _ndarray
 
 
@@ -20,6 +22,10 @@ class Page(object, metaclass=_ABCMeta):
 
     @_abstractmethod
     def to_text(self) -> str:
+        raise NotImplementedError
+
+    @_abstractmethod
+    def to_pillow(self) -> _Image:
         raise NotImplementedError
 
     @_override

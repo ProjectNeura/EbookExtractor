@@ -15,9 +15,8 @@ authors = [
 dependencies = ["Pillow", "fpdf2", "numpy"]
 
 [project.optional-dependencies]
-default = [
-    "mss", "pynput", "pytesseract"
-]
+emulation = ["mss", "pynput", "pytesseract"]
+app = ["ebook-extractor[emulation]", "customtkinter"]
 
 [tool.hatch.build.targets.sdist]
 only-include = ["ebook_extractor"]

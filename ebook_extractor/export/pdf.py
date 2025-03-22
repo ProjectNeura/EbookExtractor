@@ -1,5 +1,5 @@
-from PIL.Image import fromarray as _fromarray
 from textwrap import wrap as _wrap
+
 from fpdf import FPDF as _FPDF
 
 from ebook_extractor.prototype import Book as _Book
@@ -30,5 +30,5 @@ def save_as_pdf(book: _Book, path: str, as_text: bool = False) -> None:
     else:
         images = []
         for page in book:
-            images.append(_fromarray(page.to_image()))
+            images.append(page.to_pillow())
         images[0].save(path, "PDF", resolution=100, save_all=True, append_images=images[1:])
