@@ -22,6 +22,12 @@ ebook-extractor
 python -m ebook_extractor
 ```
 
+### Build
+
+```shell
+pyinstaller -F -w -n EbookExtractor ebook_extractor_cli/__main__.py
+```
+
 ## FAQ
 
 ### macOS Hotkeys are not Working

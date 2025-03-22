@@ -4,7 +4,7 @@ from tkinter import Event as _Event
 
 from customtkinter import CTk as _CTk, StringVar as _StringVar, CTkLabel as _CTkLabel, CTkEntry as _CTkEntry, \
     CTkOptionMenu as _CTkOptionMenu, CTkToplevel as _CTkToplevel, CTkCanvas as _CTkCanvas
-from pynput.keyboard import GlobalHotKeys as _GlobalHotKeys
+from pynput.keyboard import GlobalHotKeys as _GlobalHotKeys, Key as _Key
 
 from ebook_extractor import save_as_pdf as _save_as_pdf, save_as_images as _save_as_images
 from ebook_extractor.emulation import Book as _Book
@@ -66,8 +66,9 @@ class EbookTerminator(object):
         self._root.resizable(False, False)
         self._from_page: _StringVar = _StringVar(self._root, "1")
         self._to_page: _StringVar = _StringVar(self._root, "2")
-        self._path: _StringVar = _StringVar(self._root, "output.pdf")
         self._format: _StringVar = _StringVar(self._root, "PDF")
+        self._page_turner: _StringVar = _StringVar(self._root, "<➡>")
+        self._path: _StringVar = _StringVar(self._root, "output.pdf")
         self._instruction: _StringVar = _StringVar(self._root, "Press <shift>+<f4> to continue")
         self._region: Region = Region()
         self._extraction_thread = _Thread(target=self.extract, daemon=True)
@@ -111,8 +112,9 @@ class EbookTerminator(object):
             dialog.unbind("<ButtonRelease-1>")
             dialog.unbind("<KeyPress-Return>")
             dialog.destroy()
+            key = {"<➡>": _Key.right, "<space>": _Key.space, "<enter>": _Key.enter}[self._page_turner.get()]
             _Thread(target=self.extract, args=(_Book(int(self._from_page.get()), int(self._to_page.get()),
-                                                     self._region.convert()),), daemon=True).start()
+                                                     self._region.convert(), key),), daemon=True).start()
 
         dialog.bind("<Button-1>", set_origin)
         dialog.bind("<Motion>", set_destination)
@@ -150,6 +152,8 @@ class EbookTerminator(object):
         save_as_label = _CTkLabel(self._root, text="Save As")
         save_as_option = _CTkOptionMenu(self._root, width=96, variable=self._format,
                                         values=["PDF", "Text PDF", "Images"])
+        page_turner_option = _CTkOptionMenu(self._root, variable=self._page_turner,
+                                            values=["<➡>", "<space>", "<enter>"])
         save_as_entry = _CTkEntry(self._root, width=96, textvariable=self._path, justify="center")
         instruction_label = _CTkLabel(self._root, textvariable=self._instruction)
         from_page_label.grid(row=0, column=0, sticky="NSEW", ipadx=self._px, ipady=self._py, padx=self._px,
@@ -161,8 +165,11 @@ class EbookTerminator(object):
         save_as_label.grid(row=0, column=4, sticky="NSEW", ipadx=self._px, ipady=self._py, padx=self._px, pady=self._py)
         save_as_option.grid(row=0, column=5, sticky="NSEW", ipadx=self._px, ipady=self._py, padx=self._px,
                             pady=self._py)
-        save_as_entry.grid(row=0, column=6, sticky="NSEW", ipadx=self._px, ipady=self._py, padx=self._px, pady=self._py)
-        instruction_label.grid(row=1, column=0, columnspan=7, sticky="NSEW", ipadx=self._px, ipady=self._py,
+        page_turner_option.grid(row=0, column=6, sticky="NSEW", ipadx=self._px, ipady=self._py, padx=self._px,
+                                pady=self._py)
+        save_as_entry.grid(row=1, column=0, columnspan=2, sticky="NSEW", ipadx=self._px, ipady=self._py, padx=self._px,
+                           pady=self._py)
+        instruction_label.grid(row=1, column=2, columnspan=5, sticky="NSEW", ipadx=self._px, ipady=self._py,
                                padx=self._px, pady=self._py)
         _GlobalHotKeys({
             "<shift>+<f4>": self.select_region,
