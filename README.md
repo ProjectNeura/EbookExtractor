@@ -1,6 +1,6 @@
 # EBook Extractor
 
-Export ebooks from any platform as images or PDF files.
+Export ebooks from any platform as PDF files or images.
 
 ## Installation
 
