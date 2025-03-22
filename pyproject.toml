@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "ebook-extractor"
-version = "1.0.0-alpha.0"
+version = "1.0.0"
 description = "Export ebooks from any platform as PDF files or images."
 license = "Apache-2.0"
 readme = "README.md"
