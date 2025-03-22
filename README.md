@@ -2,6 +2,8 @@
 
 Export ebooks from any platform as PDF files or images.
 
+![poster](docs/_static/poster.png)
+
 ## Installation
 
 ```shell
