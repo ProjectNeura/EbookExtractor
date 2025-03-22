@@ -1,4 +1,5 @@
 from threading import Thread as _Thread
+from time import sleep as _sleep
 from tkinter import Event as _Event
 
 from customtkinter import CTk as _CTk, StringVar as _StringVar, CTkLabel as _CTkLabel, CTkEntry as _CTkEntry, \
@@ -55,23 +56,24 @@ class Region(object):
         return abs(self._x1 - self._x0), abs(self._y1 - self._y0)
 
 
-class EBookTerminator(object):
+class EbookTerminator(object):
     def __init__(self, padx: int = 4, pady: int = 2) -> None:
         self._px: int = padx
         self._py: int = pady
         self._root: _CTk = _CTk()
-        self._root.title("EBook Extractor")
+        self._root.title("Ebook Extractor")
         self._root.geometry("580x80")
         self._root.resizable(False, False)
         self._from_page: _StringVar = _StringVar(self._root, "1")
         self._to_page: _StringVar = _StringVar(self._root, "2")
         self._path: _StringVar = _StringVar(self._root, "output.pdf")
         self._format: _StringVar = _StringVar(self._root, "PDF")
+        self._instruction: _StringVar = _StringVar(self._root, "Press <shift>+<f4> to continue")
         self._region: Region = Region()
         self._extraction_thread = _Thread(target=self.extract, daemon=True)
 
     def select_region(self) -> None:
-        self._root.withdraw()
+        self._instruction.set("Click to start selection")
         dialog = _CTkToplevel(self._root)
         dialog.overrideredirect(True)
         dialog.attributes("-top", True)
@@ -118,6 +120,13 @@ class EBookTerminator(object):
         dialog.bind("<KeyPress-Return>", confirm)
 
     def extract(self, book: _Book) -> None:
+        self._instruction.set("Click on your ebook application to yield focus (3)")
+        _sleep(1)
+        self._instruction.set("Click on your ebook application to yield focus (2)")
+        _sleep(1)
+        self._instruction.set("Click on your ebook application to yield focus (1)")
+        _sleep(1)
+        self._instruction.set("Exporting...")
         match self._format.get():
             case "PDF":
                 _save_as_pdf(book, self._path.get())
@@ -125,6 +134,9 @@ class EBookTerminator(object):
                 _save_as_pdf(book, self._path.get(), True)
             case "Images":
                 _save_as_images(book, self._path.get())
+        book.close()
+        self._instruction.set(f"File saved at {self._path.get()}")
+        _sleep(1)
         self._root.destroy()
 
     def run(self) -> None:
@@ -139,7 +151,7 @@ class EBookTerminator(object):
         save_as_option = _CTkOptionMenu(self._root, width=96, variable=self._format,
                                         values=["PDF", "Text PDF", "Images"])
         save_as_entry = _CTkEntry(self._root, width=96, textvariable=self._path, justify="center")
-        instruction_label = _CTkLabel(self._root, text="Press <shift>+<f4> to Continue")
+        instruction_label = _CTkLabel(self._root, textvariable=self._instruction)
         from_page_label.grid(row=0, column=0, sticky="NSEW", ipadx=self._px, ipady=self._py, padx=self._px,
                              pady=self._py)
         from_page_entry.grid(row=0, column=1, sticky="NSEW", ipadx=self._px, ipady=self._py, padx=self._px,
@@ -160,4 +172,4 @@ class EBookTerminator(object):
 
 
 def __entry__() -> None:
-    EBookTerminator().run()
+    EbookTerminator().run()

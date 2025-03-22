@@ -1,4 +1,4 @@
-# EBook Extractor
+# Ebook Extractor
 
 Export ebooks from any platform as PDF files or images.
 

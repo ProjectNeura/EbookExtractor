@@ -27,7 +27,7 @@ packages = ["ebook_extractor"]
 [project.urls]
 Homepage = "https://ebook-extractor.projectneura.org"
 Documentation = "https://ebook-extractor.projectneura.org"
-Repository = "https://github.com/ProjectNeura/EBookExtractor"
+Repository = "https://github.com/ProjectNeura/EbookExtractor"
 
 [project.gui-scripts]
 leads-vec = "ebook_extractor:__entry__"
