@@ -67,7 +67,7 @@ class EbookTerminator(object):
         self._from_page: _StringVar = _StringVar(self._root, "1")
         self._to_page: _StringVar = _StringVar(self._root, "2")
         self._format: _StringVar = _StringVar(self._root, "PDF")
-        self._page_turner: _StringVar = _StringVar(self._root, "<➡>")
+        self._page_turner: _StringVar = _StringVar(self._root, "<right>")
         self._path: _StringVar = _StringVar(self._root, "output.pdf")
         self._instruction: _StringVar = _StringVar(self._root, "Press <shift>+<f4> to continue")
         self._region: Region = Region()
@@ -112,7 +112,7 @@ class EbookTerminator(object):
             dialog.unbind("<ButtonRelease-1>")
             dialog.unbind("<KeyPress-Return>")
             dialog.destroy()
-            key = {"<➡>": _Key.right, "<space>": _Key.space, "<enter>": _Key.enter}[self._page_turner.get()]
+            key = {"<right>": _Key.right, "<space>": _Key.space, "<enter>": _Key.enter}[self._page_turner.get()]
             _Thread(target=self.extract, args=(_Book(int(self._from_page.get()), int(self._to_page.get()),
                                                      self._region.convert(), key),), daemon=True).start()
 
@@ -153,7 +153,7 @@ class EbookTerminator(object):
         save_as_option = _CTkOptionMenu(self._root, width=96, variable=self._format,
                                         values=["PDF", "Text PDF", "Images"])
         page_turner_option = _CTkOptionMenu(self._root, width=96, variable=self._page_turner,
-                                            values=["<➡>", "<space>", "<enter>"])
+                                            values=["<right>", "<space>", "<enter>"])
         save_as_entry = _CTkEntry(self._root, width=96, textvariable=self._path, justify="center")
         instruction_label = _CTkLabel(self._root, textvariable=self._instruction)
         from_page_label.grid(row=0, column=0, sticky="NSEW", ipadx=self._px, ipady=self._py, padx=self._px,
