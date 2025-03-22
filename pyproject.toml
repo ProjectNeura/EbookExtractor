@@ -5,7 +5,7 @@ build-backend = "hatchling.build"
 [project]
 name = "ebook-extractor"
 version = "1.0.0-alpha.0"
-description = "Export ebooks from any platform as images or PDF files."
+description = "Export ebooks from any platform as PDF files or images."
 license = "Apache-2.0"
 readme = "README.md"
 requires-python = ">=3.12"
@@ -30,4 +30,4 @@ Documentation = "https://ebook-extractor.projectneura.org"
 Repository = "https://github.com/ProjectNeura/EbookExtractor"
 
 [project.gui-scripts]
-leads-vec = "ebook_extractor:__entry__"
+ebook-extractor = "ebook_extractor:__entry__"
