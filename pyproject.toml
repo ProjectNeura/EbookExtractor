@@ -19,10 +19,10 @@ emulation = ["mss", "pynput", "pytesseract"]
 app = ["ebook-extractor[emulation]", "customtkinter"]
 
 [tool.hatch.build.targets.sdist]
-only-include = ["ebook_extractor"]
+only-include = ["ebook_extractor", "ebook_extractor_cli"]
 
 [tool.hatch.build.targets.wheel]
-packages = ["ebook_extractor"]
+packages = ["ebook_extractor", "ebook_extractor_cli"]
 
 [project.urls]
 Homepage = "https://ebook-extractor.projectneura.org"
