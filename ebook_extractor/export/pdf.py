@@ -1,11 +1,12 @@
 from textwrap import wrap as _wrap
+from time import sleep as _sleep
 
 from fpdf import FPDF as _FPDF
 
 from ebook_extractor.prototype import Book as _Book
 
 
-def save_as_pdf(book: _Book, path: str, as_text: bool = False) -> None:
+def save_as_pdf(book: _Book, path: str, as_text: bool = False, time_interval: float = .5) -> None:
     if as_text:
         text = "\n".join(page.to_text() for page in book)
         a4_width_mm = 210
@@ -30,5 +31,6 @@ def save_as_pdf(book: _Book, path: str, as_text: bool = False) -> None:
     else:
         images = []
         for page in book:
+            _sleep(time_interval)
             images.append(page.to_pillow())
         images[0].save(path, "PDF", resolution=100, save_all=True, append_images=images[1:])
